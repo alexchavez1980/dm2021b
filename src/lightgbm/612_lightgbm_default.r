@@ -19,8 +19,12 @@ dataset  <- fread("./datasetsOri/paquete_premium_202011.csv")
 #paso la clase a binaria que tome valores {0,1}  enteros
 dataset[ , clase01 := ifelse( clase_ternaria=="BAJA+2", 1L, 0L) ]
 
+#MODIFICACIÓN ALEX: Elimino los campos ya identificados en Data Drifting
+dataset [ , mpasivos_margen := NULL]
+dataset [ , mactivos_margen := NULL]
+dataset [ , mrentabilidad_annual := NULL]
 
-campos_malos  <- c("mpasivos_margen")
+#campos_malos  <- c("mpasivos_margen")
 
 #los campos que se van a utilizar
 campos_buenos  <- setdiff( colnames(dataset), c("clase_ternaria","clase01", campos_malos) )
