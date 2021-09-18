@@ -16,9 +16,9 @@ setwd("~/buckets/b1/")
 #cargo el dataset donde voy a entrenar
 dataset  <- fread("./datasetsOri/paquete_premium_202011.csv")
 #MODIFICACIÓN ALEX: Elimino los campos ya identificados en Data Drifting
-dtrain [ , mpasivos_margen := NULL]
-dtrain [ , mactivos_margen := NULL]
-dtrain [ , mrentabilidad_annual := NULL]
+dataset [ , mpasivos_margen := NULL]
+dataset [ , mactivos_margen := NULL]
+dataset [ , mrentabilidad_annual := NULL]
 #paso la clase a binaria que tome valores {0,1}  enteros
 dataset[ , clase01 := ifelse( clase_ternaria=="BAJA+2", 1L, 0L) ]
 
