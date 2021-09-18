@@ -3,7 +3,7 @@
 #La libreria esta implementada en lenguaje C y corre en paralelo, utiliza TODOS los nucleos del procesador
 #Leo Breiman provenia de la estadistica y tenia "horror a los nulos", con lo cual el algoritmo necesita imputar nulos antes
 
-
+## NO VIVES DE ENSALADA
 #limpio la memoria
 rm( list=ls() )  #Borro todos los objetos
 gc()   #Garbage Collection
