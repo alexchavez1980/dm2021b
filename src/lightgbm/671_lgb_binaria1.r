@@ -1,3 +1,7 @@
+# MODIFICACIONES ALEX
+# 671_lgb_binaria1 con modificaciones
+# Cambio de semilla y retiro de variables.
+
 #Necesita para correr en Google Cloud
 #16 GB de memoria RAM
 #256 GB de espacio en el disco local
@@ -34,9 +38,8 @@ switch ( Sys.info()[['sysname']],
        )
 
 #defino la carpeta donde trabajo
-setwd( directory.root )
-
-
+#setwd( directory.root )
+setwd("D:\\Alex\\Estudio\\Esp_Ciencia_Datos\\02_ MD")
 
 kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es para continuar procesando
 
@@ -54,9 +57,9 @@ hs <- makeParamSet(
          makeNumericParam("prob_corte",       lower= 0.020, upper=    0.035)
         )
 
-campos_malos  <- c( "mpasivos_margen" )   #aqui se deben cargar todos los campos culpables del Data Drifting
+campos_malos  <- c( "mpasivos_margen", "mactivos_margen", "mrentabilidad_annual")   #aqui se deben cargar todos los campos culpables del Data Drifting
 
-ksemilla_azar  <- 102191  #Aqui poner la propia semilla
+ksemilla_azar  <- 102229  #Aqui poner la propia semilla
 #------------------------------------------------------------------------------
 #Funcion que lleva el registro de los experimentos
 
