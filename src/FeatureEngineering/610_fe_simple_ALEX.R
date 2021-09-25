@@ -7,8 +7,8 @@
 rm( list=ls() )
 gc()
 
-require("data.table")
 
+require("data.table")
 #Establezco el Working Directory
 #setwd( "~/buckets/b1/crudo" )
 setwd("D:\\Alex\\Estudio\\Esp_Ciencia_Datos\\02_ MD")
@@ -20,14 +20,11 @@ EnriquecerDataset <- function( dataset , arch_destino )
   #Pruebo con mrentabilidad
   
   dataset[ , mrentabilidad_mult := mrentabilidad*100]
-  #dataset[ , mrentabilidad_log := log(mrentabilidad)]
-  #dataset[ , mrentabilidad_bin := ifelse( mrentabilidad < 0 , 0, 1)]
+  dataset[ , mrentabilidad_log := log(mrentabilidad)]
+  dataset[ , mrentabilidad_bin := ifelse( mrentabilidad < 0 , 0, 1)]
   
-  #INICIO de la seccion donde se deben hacer cambios con variables nuevas
-  
-  #se crean los nuevos campos para MasterCard  y Visa, teniendo en cuenta los NA's
-  #varias formas de combinar Visa_status y Master_status
-  
+  dataset[ ,  canarito_runif :=  runif( nrow(dataset) ) ] #agrego una variable canarito, random distribucion uniforme en el intervalo [0,1]
+  dataset[ ,  canarito_sample :=  sample( nrow(dataset) ) ] #agrego una variable canarito, random distribucion uniforme en el intervalo [0,1]
   
   #valvula de seguridad para evitar valores infinitos
   #paso los infinitos a NULOS
@@ -76,4 +73,4 @@ dataset2  <- fread("./datasetsOri/paquete_premium_202101.csv")
 EnriquecerDataset( dataset1, "./datasets/paquete_premium_202011_ext.csv" )
 EnriquecerDataset( dataset2, "./datasets/paquete_premium_202101_ext.csv" )
 
-quit( save="no")
+#quit( save="no")
