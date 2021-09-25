@@ -41,7 +41,6 @@ switch ( Sys.info()[['sysname']],
 setwd("D:\\Alex\\Estudio\\Esp_Ciencia_Datos\\02_ MD")
 
 
-
 kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es para continuar procesando
 
 kscript           <- "672_lgb_binaria2"

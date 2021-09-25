@@ -2,6 +2,9 @@
 #funciona automaticamente con EXPERIMENTOS
 #va generando incrementalmente salidas para kaggle
 
+#Corregí las salidas. 
+#Les puse el nombre 660_lightgbm_BO
+
 #limpio la memoria
 rm( list=ls() )  #remove all objects
 gc()             #garbage collection
@@ -181,8 +184,8 @@ EstimarGanancia_lightgbm  <- function( x )
 if( is.na(kexperimento ) )   kexperimento <- get_experimento()  #creo el experimento
 
 #en estos archivos quedan los resultados
-kbayesiana  <- paste0("./work/E",  kexperimento, "_rpart.RDATA" )
-klog        <- paste0("./work/E",  kexperimento, "_rpart_log.txt" )
+kbayesiana  <- paste0("./work/E",  kexperimento, "_660_lightgbm_BO.RDATA" )
+klog        <- paste0("./work/E",  kexperimento, "_660_lightgbm_BO_log.txt" )
 kkaggle     <- paste0("./kaggle/E",kexperimento, "_", kscript, "_" )
 
 
