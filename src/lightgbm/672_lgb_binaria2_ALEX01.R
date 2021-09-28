@@ -1,5 +1,5 @@
 # MODIFICACIONES ALEX
-# 671_lgb_binaria2 con modificaciones
+# 672_lgb_binaria2 con modificaciones
 # Cambio de semilla y retiro de variables.
 
 #Necesita para correr en Google Cloud
@@ -45,7 +45,7 @@ kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es pa
 
 kscript           <- "672_lgb_binaria2"
 karch_generacion  <- "./datasets/paquete_premium_202011_ext.csv"
-karch_aplicacion  <- "./datasets/paquete_premium_202011_ext.csv"
+karch_aplicacion  <- "./datasets/paquete_premium_202101_ext.csv"
 kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 #Aqui se cargan los hiperparametros

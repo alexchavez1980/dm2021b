@@ -3,10 +3,11 @@
 #Condimentar a gusto con nuevas variables
 
 #Las que van quedando son:
-# ctrx_quarter_mult
-# prom_5_var_vol ***
-# mpayroll_log ***
-# Las binarias no sirven
+# ctrx_quarter_mult ***
+# prom_5_var_vol ****
+# mpayroll_log ****
+# Las binarias no sirven NO SIRVEN
+# cpayroll_trx_cuad Parece que no sirve
 
 
 #limpio la memoria
