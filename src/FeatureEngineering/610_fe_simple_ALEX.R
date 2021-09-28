@@ -1,7 +1,13 @@
 #Feature Engineering
 #creo nuevas variables dentro del mismo mes
 #Condimentar a gusto con nuevas variables
-#COMENTARIO ALEX: VOY A COMENZAR A AJUSTAR VARIABLES
+
+#Las que van quedando son:
+# ctrx_quarter_mult
+# prom_5_var_vol ***
+# mpayroll_log ***
+# Las binarias no sirven
+
 
 #limpio la memoria
 rm( list=ls() )
@@ -32,11 +38,15 @@ EnriquecerDataset <- function( dataset , arch_destino )
   dataset[ , mcuentas_saldo_bin := ifelse(mcuentas_saldo < 0,0,1)]
   dataset[ , mcuentas_saldo_vol := ifelse(mcuentas_saldo < 0,mcuentas_saldo*(-1),mcuentas_saldo)]
 
-  dataset[ , mpayroll_mult := mpayroll*100]
   dataset[ , mpayroll_log := log(mpayroll)]
   dataset[ , mpayroll_bin := ifelse(mpayroll < 0,0,1)]
   dataset[ , mpayroll_vol := ifelse(mpayroll < 0,mpayroll*(-1),mpayroll)]
 
+  dataset[ , cpayroll_trx_mult := cpayroll_trx*100]
+  dataset[ , cpayroll_trx_log := log(cpayroll_trx)]
+  dataset[ , cpayroll_trx_bin := ifelse(cpayroll_trx < 0,0,1)]
+  dataset[ , cpayroll_trx_vol := ifelse(cpayroll_trx < 0,cpayroll_trx*(-1),cpayroll_trx)]
+  
   dataset[ , mcuenta_debitos_automaticos_mult := mcuenta_debitos_automaticos*100]
   dataset[ , mcuenta_debitos_automaticos_log := log(mcuenta_debitos_automaticos)]
   dataset[ , mcuenta_debitos_automaticos_bin := ifelse(mcuenta_debitos_automaticos < 0,0,1)]  
@@ -59,6 +69,7 @@ EnriquecerDataset <- function( dataset , arch_destino )
   dataset[ , prom_5_var_mult := prom_5_var*100]  
 
   #Promedio de donde se mueve el dinero DEL VOLÚMEN
+  #OJO: Acá hay una buena.
   dataset[ , prom_5_var_vol := (mcuentas_saldo_vol + mpayroll_vol + mcuenta_debitos_automaticos_vol + mtransferencias_recibidas_vol + mextraccion_autoservicio_vol)/5]
   dataset[ , prom_5_var_vol_mult := prom_5_var_vol*100]    
   
@@ -67,7 +78,27 @@ EnriquecerDataset <- function( dataset , arch_destino )
 #  dataset[ , mcomisiones_log := log(mcomisiones)]
 #  dataset[ , mactivos_margen_log := log(mactivos_margen)]
 #  dataset[ , mpasivos_margen_log := log(mpasivos_margen)]
+  
+  
+# Master_status y Visa_status  
+# { 0,  6, 7, 9 }   indica el estado de la cuenta de la tarjeta de crédito. 
+# 0 abierta,  6 en proceso de cierre, 7 en proceso avanzado de cierre, 
+# 9 cuenta cerrada.   Una cuenta cerrada puede volver a abrirse !!
+# Si las junto, y las acomodo logarítmicamente, puede clasificar.
+  dataset[ , MyV_status_prom := (Master_status + Visa_status)/2]
+  dataset[ , MyV_status_prom_log := (log(Master_status + Visa_status)/2)]
+  dataset[ , MyV_status_prom_mult := (log(Master_status + Visa_status)/2)*100]
 
+# cpayroll_trx
+# Cantidad de Acreditaciones de Haberes en relación de depencia que 
+# le hicieron al cliente en ese mes.  
+# Un cliente puede estar en relacion de dependencia con mas de una empresa. 
+# Una empresa puede hacerle VARIOS depósitos al mismo empleado durante el mes.  
+# Solamente se consideran las acreditaciones de empresas que tienen un contrato con el banco.
+  
+  dataset[ , cpayroll_trx_cuad := (cpayroll_trx)^2]
+  
+#---------------------------LAS DE GUSTAVO------------------------  
 
   #INICIO de la seccion donde se deben hacer cambios con variables nuevas
   #se crean los nuevos campos para MasterCard  y Visa, teniendo en cuenta los NA's
@@ -86,7 +117,7 @@ EnriquecerDataset <- function( dataset , arch_destino )
                                           ifelse( is.na(Visa_status), 10, Visa_status), 
                                           Master_status)  ]
 
-  #---------------------------LAS DE GUSTAVO------------------------  
+
   
   #combino MasterCard y Visa
   dataset[ , mv_mfinanciacion_limite := rowSums( cbind( Master_mfinanciacion_limite,  Visa_mfinanciacion_limite) , na.rm=TRUE ) ]
@@ -128,8 +159,6 @@ EnriquecerDataset <- function( dataset , arch_destino )
   dataset[ , mvr_mpagosdolares       := mv_mpagosdolares / mv_mlimitecompra ]
   dataset[ , mvr_mconsumototal       := mv_mconsumototal  / mv_mlimitecompra ]
   dataset[ , mvr_mpagominimo         := mv_mpagominimo  / mv_mlimitecompra ]
-  
-  
   
   #valvula de seguridad para evitar valores infinitos
   #paso los infinitos a NULOS
