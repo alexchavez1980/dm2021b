@@ -49,22 +49,22 @@ karch_aplicacion  <- "./datasets/paquete_premium_202101_ext.csv"
 kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 #Aqui se cargan los hiperparametros
-hs <- makeParamSet( 
-         makeNumericParam("learning_rate",    lower= 0.01 , upper=    0.1),
-         makeNumericParam("feature_fraction", lower= 0.2  , upper=    1.0),
-         makeIntegerParam("min_data_in_leaf", lower= 0    , upper= 8000),
-         makeIntegerParam("num_leaves",       lower=16L   , upper= 1024L),
-         makeNumericParam("prob_corte",       lower= 0.020, upper=    0.055)
-        )
+#hs <- makeParamSet( 
+#         makeNumericParam("learning_rate",    lower= 0.01 , upper=    0.1),
+#         makeNumericParam("feature_fraction", lower= 0.2  , upper=    1.0),
+#         makeIntegerParam("min_data_in_leaf", lower= 0    , upper= 8000),
+#         makeIntegerParam("num_leaves",       lower=16L   , upper= 1024L),
+#         makeNumericParam("prob_corte",       lower= 0.020, upper=    0.055)
+#        )
 
 # Hiperparámetros del futuro.
-#hs <- makeParamSet( 
-#  makeNumericParam("learning_rate",    lower=    0.02 , upper=    0.06),
-#  makeNumericParam("feature_fraction", lower=    0.1  , upper=    0.4),
-#  makeIntegerParam("min_data_in_leaf", lower= 1000L   , upper= 8000L),
-#  makeIntegerParam("num_leaves",       lower=  100L   , upper= 1024L),
-#  makeNumericParam("prob_corte",       lower=    0.040, upper=    0.055)
-#)
+hs <- makeParamSet( 
+  makeNumericParam("learning_rate",    lower=    0.02 , upper=    0.06),
+  makeNumericParam("feature_fraction", lower=    0.1  , upper=    0.4),
+  makeIntegerParam("min_data_in_leaf", lower= 1000L   , upper= 8000L),
+  makeIntegerParam("num_leaves",       lower=  100L   , upper= 1024L),
+  makeNumericParam("prob_corte",       lower=    0.040, upper=    0.055)
+)
 
 campos_malos  <- c( "mpasivos_margen", "mactivos_margen", "mrentabilidad_annual")   #aqui se deben cargar todos los campos culpables del Data Drifting
 
