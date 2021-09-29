@@ -26,12 +26,12 @@ dtrain  <- lgb.Dataset( data= data.matrix(  dataset[ , campos_buenos, with=FALSE
 
 #Aqui se deben cargar los parametros
 param_buenos  <- list( objective= "binary",
-                       num_iterations= 182,
-                       learning_rate=  0.0431667473571838,
-                       min_data_in_leaf=  3089,
-                       num_leaves= 529,
-                       feature_fraction= 0.917699222947529,
-                       prob_corte= 0.0407167257204839
+                       num_iterations= 31,
+                       learning_rate=  0.0218849449315329,
+                       min_data_in_leaf=  3084,
+                       num_leaves= 667,
+                       feature_fraction= 0.944670649932033,
+                       prob_corte= 0.0212755601452366
                        )
 
 #genero el modelo
@@ -54,6 +54,6 @@ entrega  <- as.data.table( list( "numero_de_cliente"= dapply[  , numero_de_clien
 
 #genero el archivo para Kaggle
 fwrite( entrega, 
-        file= "./kaggle/hp27.csv", 
+        file= "./kaggle/Exp04_G100mil.csv", 
         sep= "," )
 
