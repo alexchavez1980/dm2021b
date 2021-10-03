@@ -96,7 +96,21 @@ EnriquecerDataset <- function( dataset , arch_destino )
   # Solamente se consideran las acreditaciones de empresas que tienen un contrato con el banco.
   
   dataset[ , cpayroll_trx_cuad := (cpayroll_trx)^2]
-
+  
+  # Monto total de los consumos efectuados durante el mes con la tarjeta de crédito
+  # mtarjeta_visa_consumo y mtarjeta_master_consumo
+  dataset[ , mtarjeta_visa_consumo_vol := ifelse(mtarjeta_visa_consumo < 0,mtarjeta_visa_consumo*(-1),mtarjeta_visa_consumo)]
+  dataset[ , mtarjeta_master_consumo_vol := ifelse(mtarjeta_master_consumo < 0,mtarjeta_master_consumo*(-1),mtarjeta_master_consumo)]
+  dataset[ , mtarjeta_VyM_consumo_prom := (mtarjeta_visa_consumo_vol + mtarjeta_master_consumo_vol)/2] 
+  
+  # Monto del pago minimo necesario para no ser moroso de la tarjeta de crédito
+  # Master_mpagominimo Visa_mpagominimo
+  dataset[ , MyV_mpagominimo_prom := (Master_mpagominimo + Visa_mpagominimo)/2]
+  
+  # Monto total de las cajas de ahorro en dólares.  
+  # El valor esta expresado en pesos, y se considera el valor del dolar de cierre del último dia hábil del mes.
+  # mcaja_ahorro_dolares
+  
   #INICIO de la seccion donde se deben hacer cambios con variables nuevas
   #se crean los nuevos campos para MasterCard  y Visa, teniendo en cuenta los NA's
   #varias formas de combinar Visa_status y Master_status
