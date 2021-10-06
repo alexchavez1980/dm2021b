@@ -740,6 +740,13 @@ correr_todo  <- function( palancas )
           paste0( "./datasets/dataset_epic_", palancas$version, ".csv.gz" ),
           logical01 = TRUE,
           sep= "," )
+  
+  #Grabo un dataset para chequear las variables
+  ds_view <- dataset[1:100, ]
+  fwrite( ds_view,
+        paste0( "./datasets/dataset_epic_view_", palancas$version, ".csv.gz" ),
+        logical01 = TRUE,
+        sep= "," )
 
 }
 #------------------------------------------------------------------------------
