@@ -754,7 +754,7 @@ correr_todo  <- function( palancas )
         paste0( "./datasets/dataset_epic_view_", palancas$version, ".csv.gz" ),
         logical01 = TRUE,
         sep= "," )
-
+  View(ds_view)
 }
 #------------------------------------------------------------------------------
 
