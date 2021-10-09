@@ -22,7 +22,7 @@ setwd( directory.root )
 
 palancas  <- list()  #variable con las palancas para activar/desactivar
 
-palancas$version  <- "v011"   #Muy importante, ir cambiando la version
+palancas$version  <- "v012"   #Muy importante, ir cambiando la version
 
 palancas$variablesdrift  <- c("internet", "mpasivos_margen")   #aqui van las columnas que se quieren eliminar
 
@@ -59,7 +59,7 @@ palancas$maximo6  <- FALSE
 palancas$ratiomax3   <- FALSE   #La idea de Daiana Sparta
 palancas$ratiomean6  <- FALSE   #Un derivado de la idea de Daiana Sparta
 
-# PRENDÍ ESTA PALANCA
+# APAGUÉ ESTA PALANCA
 palancas$tendencia6  <- FALSE    #Great power comes with great responsability
 
 
@@ -261,7 +261,8 @@ AgregarVariables  <- function( dataset )
 # dataset[ , mextraccion_autoservicio_bin := ifelse(mextraccion_autoservicio < 0,0,1)]
   dataset[ , ALEX_mextraccion_autoservicio_vol := ifelse(mextraccion_autoservicio < 0,mextraccion_autoservicio*(-1),mextraccion_autoservicio)]
   
-#  dataset[ , ctrx_quarter_mult := ctrx_quarter*100]
+  dataset[ , ALEX_ctrx_quarter_mult := ctrx_quarter*100]
+  dataset[ , ALEX_ctrx_quarter_cuad := (ctrx_quarter)^2]
   
   #Promedio de donde se mueve el dinero
   dataset[ , ALEX_prom_5_var := (mcuentas_saldo + mpayroll + mcuenta_debitos_automaticos + mtransferencias_recibidas + mextraccion_autoservicio)/5]
@@ -289,6 +290,7 @@ AgregarVariables  <- function( dataset )
   # Solamente se consideran las acreditaciones de empresas que tienen un contrato con el banco.
   
   dataset[ , ALEX_cpayroll_trx_cuad := (cpayroll_trx)^2]
+  dataset[ , ALEX_cpayroll_trx_mult := cpayroll_trx*100]
   
   # Monto total de los consumos efectuados durante el mes con la tarjeta de crédito
   # mtarjeta_visa_consumo y mtarjeta_master_consumo
@@ -301,9 +303,15 @@ AgregarVariables  <- function( dataset )
   # Master_mpagominimo Visa_mpagominimo
   dataset[ , ALEX_MyV_mpagominimo_prom := (Master_mpagominimo + Visa_mpagominimo)/2]
   
-  # Monto total de las cajas de ahorro en dólares.  
-  # El valor esta expresado en pesos, y se considera el valor del dolar de cierre del último dia hábil del mes.
-  # mcaja_ahorro_dolares
+  #mcaja_ahorro	pesos	Monto total de la caja de ahorro del Paquete Premium
+  #mcaja_ahorro_adicional	pesos	Monto total de las cajas otras cajas de ahorro 
+  #que no forman parte del paquete.
+  #mcaja_ahorro_dolares	pesos	Monto total de las cajas de ahorro en dólares.  
+  #El valor esta expresado en pesos, y se considera el valor del dolar de cierre del último dia hábil del mes.
+  
+  ALEX_mcaja_ahorro_sum
+  dataset[ , ALEX_mcaja_ahorro_sum := mcaja_ahorro + mcaja_ahorro_adicional + mcaja_ahorro_dolares]
+  dataset[ , ALEX_mcaja_ahorro_abs := ifelse(ALEX_mcaja_ahorro_sum < 0,ALEX_mcaja_ahorro_sum*(-1),ALEX_mcaja_ahorro_sum)]
   
   # Posible nueva variable
   #mcuenta_corriente_adicional	pesos	Monto total de las cuentas corrientes adicionales que no forman parte del paquete.

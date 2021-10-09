@@ -49,7 +49,7 @@ kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es pa
 
 kscript         <- "822_epic"
 
-karch_dataset    <- "./datasets/dataset_epic_v011.csv.gz"
+karch_dataset    <- "./datasets/dataset_epic_v012.csv.gz"
 
 kapply_mes       <- c(202101)  #El mes donde debo aplicar el modelo
 
@@ -66,7 +66,7 @@ ktrain_meses_malos  <- c( 202006 )  #meses que quiero excluir del entrenamiento
 ktrain_subsampling  <- 0.1   #el subsampling que voy a hacer de los continua
 
 
-kBO_iter    <-  100   #cantidad de iteraciones de la Optimizacion Bayesiana
+kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 #Aqui se cargan los hiperparametros
 hs <- makeParamSet( 
