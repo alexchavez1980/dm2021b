@@ -22,9 +22,9 @@ setwd( directory.root )
 
 palancas  <- list()  #variable con las palancas para activar/desactivar
 
-palancas$version  <- "v010"   #Muy importante, ir cambiando la version
+palancas$version  <- "v011"   #Muy importante, ir cambiando la version
 
-palancas$variablesdrift  <- c("internet")   #aqui van las columnas que se quieren eliminar
+palancas$variablesdrift  <- c("internet", "mpasivos_margen")   #aqui van las columnas que se quieren eliminar
 
 palancas$corregir <-  TRUE    # TRUE o FALSE
 
@@ -34,8 +34,8 @@ palancas$dummiesNA  <-  FALSE #La idea de Santiago Dellachiesa
 
 palancas$lag1   <- TRUE    #lag de orden 1
 palancas$delta1 <- TRUE    # campo -  lag de orden 1 
-palancas$lag2   <- FALSE
-palancas$delta2 <- FALSE
+palancas$lag2   <- TRUE    # PRENDÍ ESTA PALANCA
+palancas$delta2 <- TRUE    # PRENDÍ ESTA PALANCA
 palancas$lag3   <- FALSE
 palancas$delta3 <- FALSE
 palancas$lag4   <- FALSE
@@ -45,8 +45,10 @@ palancas$delta5 <- FALSE
 palancas$lag6   <- FALSE
 palancas$delta6 <- FALSE
 
-palancas$promedio3  <- FALSE  #promedio  de los ultimos 3 meses
-palancas$promedio6  <- FALSE
+# PRENDÍ ESTA PALANCA
+palancas$promedio3  <- TRUE  #promedio  de los ultimos 3 meses
+# PRENDÍ ESTA PALANCA
+palancas$promedio6  <- TRUE
 
 palancas$minimo3  <- FALSE  #minimo de los ultimos 3 meses
 palancas$minimo6  <- FALSE
@@ -57,7 +59,7 @@ palancas$maximo6  <- FALSE
 palancas$ratiomax3   <- FALSE   #La idea de Daiana Sparta
 palancas$ratiomean6  <- FALSE   #Un derivado de la idea de Daiana Sparta
 
-#APAGUÉ ESTA PALANCA
+# PRENDÍ ESTA PALANCA
 palancas$tendencia6  <- FALSE    #Great power comes with great responsability
 
 
@@ -225,69 +227,59 @@ AgregarVariables  <- function( dataset )
   
 # VARIABLES ALEX
   
-  dataset[ ,  canarito_runif :=  runif( nrow(dataset) ) ] #agrego una variable canarito, random distribucion uniforme en el intervalo [0,1]
-  dataset[ ,  canarito_sample :=  sample( nrow(dataset) ) ] #agrego una variable canarito, random distribucion uniforme en el intervalo [0,1]
+# dataset[ , mrentabilidad_mult := mrentabilidad*100]
+# dataset[ , mrentabilidad_log := log(mrentabilidad)]
+# dataset[ , mrentabilidad_bin := ifelse(mrentabilidad < 0,0,1)]
+  dataset[ , ALEX_mrentabilidad_vol := ifelse(mrentabilidad < 0,mrentabilidad*(-1),mrentabilidad)]
   
-  dataset[ , mrentabilidad_mult := mrentabilidad*100]
-  dataset[ , mrentabilidad_log := log(mrentabilidad)]
-  dataset[ , mrentabilidad_bin := ifelse(mrentabilidad < 0,0,1)]
-  dataset[ , mrentabilidad_vol := ifelse(mrentabilidad < 0,mrentabilidad*(-1),mrentabilidad)]
+# dataset[ , mcuentas_saldo_mult := mcuentas_saldo*100]
+# dataset[ , mcuentas_saldo_log := log(mcuentas_saldo)]
+# dataset[ , mcuentas_saldo_bin := ifelse(mcuentas_saldo < 0,0,1)]
+  dataset[ , ALEX_mcuentas_saldo_vol := ifelse(mcuentas_saldo < 0,mcuentas_saldo*(-1),mcuentas_saldo)]
   
-  dataset[ , mcuentas_saldo_mult := mcuentas_saldo*100]
-  dataset[ , mcuentas_saldo_log := log(mcuentas_saldo)]
-  dataset[ , mcuentas_saldo_bin := ifelse(mcuentas_saldo < 0,0,1)]
-  dataset[ , mcuentas_saldo_vol := ifelse(mcuentas_saldo < 0,mcuentas_saldo*(-1),mcuentas_saldo)]
+# dataset[ , mpayroll_log := log(mpayroll)]
+# dataset[ , mpayroll_bin := ifelse(mpayroll < 0,0,1)]
+  dataset[ , ALEX_mpayroll_vol := ifelse(mpayroll < 0,mpayroll*(-1),mpayroll)]
   
-  dataset[ , mpayroll_log := log(mpayroll)]
-  dataset[ , mpayroll_bin := ifelse(mpayroll < 0,0,1)]
-  dataset[ , mpayroll_vol := ifelse(mpayroll < 0,mpayroll*(-1),mpayroll)]
+# dataset[ , cpayroll_trx_mult := cpayroll_trx*100]
+# dataset[ , cpayroll_trx_log := log(cpayroll_trx)]
+# dataset[ , cpayroll_trx_bin := ifelse(cpayroll_trx < 0,0,1)]
+  dataset[ , ALEX_cpayroll_trx_vol := ifelse(cpayroll_trx < 0,cpayroll_trx*(-1),cpayroll_trx)]
   
-  dataset[ , cpayroll_trx_mult := cpayroll_trx*100]
-  dataset[ , cpayroll_trx_log := log(cpayroll_trx)]
-  dataset[ , cpayroll_trx_bin := ifelse(cpayroll_trx < 0,0,1)]
-  dataset[ , cpayroll_trx_vol := ifelse(cpayroll_trx < 0,cpayroll_trx*(-1),cpayroll_trx)]
+# dataset[ , mcuenta_debitos_automaticos_mult := mcuenta_debitos_automaticos*100]
+# dataset[ , mcuenta_debitos_automaticos_log := log(mcuenta_debitos_automaticos)]
+# dataset[ , mcuenta_debitos_automaticos_bin := ifelse(mcuenta_debitos_automaticos < 0,0,1)]  
+  dataset[ , ALEX_mcuenta_debitos_automaticos_vol := ifelse(mcuenta_debitos_automaticos < 0,mcuenta_debitos_automaticos*(-1),mcuenta_debitos_automaticos)]
   
-  dataset[ , mcuenta_debitos_automaticos_mult := mcuenta_debitos_automaticos*100]
-  dataset[ , mcuenta_debitos_automaticos_log := log(mcuenta_debitos_automaticos)]
-  dataset[ , mcuenta_debitos_automaticos_bin := ifelse(mcuenta_debitos_automaticos < 0,0,1)]  
-  dataset[ , mcuenta_debitos_automaticos_vol := ifelse(mcuenta_debitos_automaticos < 0,mcuenta_debitos_automaticos*(-1),mcuenta_debitos_automaticos)]
+# dataset[ , mtransferencias_recibidas_mult := mtransferencias_recibidas*100]
+# dataset[ , mtransferencias_recibidas_log := log(mtransferencias_recibidas)]
+# dataset[ , mtransferencias_recibidas_bin := ifelse(mtransferencias_recibidas < 0,0,1)]
+  dataset[ , ALEX_mtransferencias_recibidas_vol := ifelse(mtransferencias_recibidas < 0,mtransferencias_recibidas*(-1),mtransferencias_recibidas)]
   
-  dataset[ , mtransferencias_recibidas_mult := mtransferencias_recibidas*100]
-  dataset[ , mtransferencias_recibidas_log := log(mtransferencias_recibidas)]
-  dataset[ , mtransferencias_recibidas_bin := ifelse(mtransferencias_recibidas < 0,0,1)]
-  dataset[ , mtransferencias_recibidas_vol := ifelse(mtransferencias_recibidas < 0,mtransferencias_recibidas*(-1),mtransferencias_recibidas)]
+# dataset[ , mextraccion_autoservicio_mult := mextraccion_autoservicio*100]
+# dataset[ , mextraccion_autoservicio_log := log(mextraccion_autoservicio)]
+# dataset[ , mextraccion_autoservicio_bin := ifelse(mextraccion_autoservicio < 0,0,1)]
+  dataset[ , ALEX_mextraccion_autoservicio_vol := ifelse(mextraccion_autoservicio < 0,mextraccion_autoservicio*(-1),mextraccion_autoservicio)]
   
-  dataset[ , mextraccion_autoservicio_mult := mextraccion_autoservicio*100]
-  dataset[ , mextraccion_autoservicio_log := log(mextraccion_autoservicio)]
-  dataset[ , mextraccion_autoservicio_bin := ifelse(mextraccion_autoservicio < 0,0,1)]
-  dataset[ , mextraccion_autoservicio_vol := ifelse(mextraccion_autoservicio < 0,mextraccion_autoservicio*(-1),mextraccion_autoservicio)]
-  
-  dataset[ , ctrx_quarter_mult := ctrx_quarter*100]
+#  dataset[ , ctrx_quarter_mult := ctrx_quarter*100]
   
   #Promedio de donde se mueve el dinero
-  dataset[ , prom_5_var := (mcuentas_saldo + mpayroll + mcuenta_debitos_automaticos + mtransferencias_recibidas + mextraccion_autoservicio)/5]
-  dataset[ , prom_5_var_mult := prom_5_var*100]  
+  dataset[ , ALEX_prom_5_var := (mcuentas_saldo + mpayroll + mcuenta_debitos_automaticos + mtransferencias_recibidas + mextraccion_autoservicio)/5]
+# dataset[ , prom_5_var_mult := prom_5_var*100]  
   
   #Promedio de donde se mueve el dinero DEL VOLÚMEN
   #OJO: Acá hay una buena.
-  dataset[ , prom_5_var_vol := (mcuentas_saldo_vol + mpayroll_vol + mcuenta_debitos_automaticos_vol + mtransferencias_recibidas_vol + mextraccion_autoservicio_vol)/5]
-  dataset[ , prom_5_var_vol_mult := prom_5_var_vol*100]    
-  
-  #Logaritmear todas las que representan ganancia para el banco.
-  #  dataset[ , mrentabilidad_annual_log := log(mrentabilidad_annual)]
-  #  dataset[ , mcomisiones_log := log(mcomisiones)]
-  #  dataset[ , mactivos_margen_log := log(mactivos_margen)]
-  #  dataset[ , mpasivos_margen_log := log(mpasivos_margen)]
-  
+  dataset[ , ALEX_prom_5_var_vol := (mcuentas_saldo_vol + mpayroll_vol + mcuenta_debitos_automaticos_vol + mtransferencias_recibidas_vol + mextraccion_autoservicio_vol)/5]
+# dataset[ , prom_5_var_vol_mult := prom_5_var_vol*100]    
   
   # Master_status y Visa_status  
   # { 0,  6, 7, 9 }   indica el estado de la cuenta de la tarjeta de crédito. 
   # 0 abierta,  6 en proceso de cierre, 7 en proceso avanzado de cierre, 
   # 9 cuenta cerrada.   Una cuenta cerrada puede volver a abrirse !!
   # Si las junto, y las acomodo logarítmicamente, puede clasificar.
-  dataset[ , MyV_status_prom := (Master_status + Visa_status)/2]
-  dataset[ , MyV_status_prom_log := (log(Master_status + Visa_status)/2)]
-  dataset[ , MyV_status_prom_mult := (log(Master_status + Visa_status)/2)*100]
+  dataset[ , ALEX_MyV_status_prom := (Master_status + Visa_status)/2]
+# dataset[ , MyV_status_prom_log := (log(Master_status + Visa_status)/2)]
+# dataset[ , MyV_status_prom_mult := (log(Master_status + Visa_status)/2)*100]
   
   # cpayroll_trx
   # Cantidad de Acreditaciones de Haberes en relación de depencia que 
@@ -296,21 +288,31 @@ AgregarVariables  <- function( dataset )
   # Una empresa puede hacerle VARIOS depósitos al mismo empleado durante el mes.  
   # Solamente se consideran las acreditaciones de empresas que tienen un contrato con el banco.
   
-  dataset[ , cpayroll_trx_cuad := (cpayroll_trx)^2]
+  dataset[ , ALEX_cpayroll_trx_cuad := (cpayroll_trx)^2]
   
   # Monto total de los consumos efectuados durante el mes con la tarjeta de crédito
   # mtarjeta_visa_consumo y mtarjeta_master_consumo
-  dataset[ , mtarjeta_visa_consumo_vol := ifelse(mtarjeta_visa_consumo < 0,mtarjeta_visa_consumo*(-1),mtarjeta_visa_consumo)]
-  dataset[ , mtarjeta_master_consumo_vol := ifelse(mtarjeta_master_consumo < 0,mtarjeta_master_consumo*(-1),mtarjeta_master_consumo)]
-  dataset[ , mtarjeta_VyM_consumo_prom := (mtarjeta_visa_consumo_vol + mtarjeta_master_consumo_vol)/2] 
+  # Valores absolutos para testear volúmen
+  dataset[ , ALEX_mtarjeta_visa_consumo_vol := ifelse(mtarjeta_visa_consumo < 0,mtarjeta_visa_consumo*(-1),mtarjeta_visa_consumo)]
+  dataset[ , ALEX_mtarjeta_master_consumo_vol := ifelse(mtarjeta_master_consumo < 0,mtarjeta_master_consumo*(-1),mtarjeta_master_consumo)]
+  dataset[ , ALEX_mtarjeta_VyM_consumo_prom := (mtarjeta_visa_consumo_vol + mtarjeta_master_consumo_vol)/2] 
   
   # Monto del pago minimo necesario para no ser moroso de la tarjeta de crédito
   # Master_mpagominimo Visa_mpagominimo
-  dataset[ , MyV_mpagominimo_prom := (Master_mpagominimo + Visa_mpagominimo)/2]
+  dataset[ , ALEX_MyV_mpagominimo_prom := (Master_mpagominimo + Visa_mpagominimo)/2]
   
   # Monto total de las cajas de ahorro en dólares.  
   # El valor esta expresado en pesos, y se considera el valor del dolar de cierre del último dia hábil del mes.
   # mcaja_ahorro_dolares
+  
+  # Posible nueva variable
+  #mcuenta_corriente_adicional	pesos	Monto total de las cuentas corrientes adicionales que no forman parte del paquete.
+  #mcuenta_corriente	pesos	Monto total de las cuenta corriente del paquete premium
+  # Valores absolutos para testear volúmen
+  dataset[ , ALEX_mcuenta_corriente_abs := ifelse(mcuenta_corriente < 0,mcuenta_corriente*(-1),mcuenta_corriente)]
+  dataset[ , ALEX_mcuenta_corriente_adicional_abs := ifelse(mcuenta_corriente_adicional < 0,mcuenta_corriente_adicional*(-1),mcuenta_corriente_adicional)]
+  dataset[ , ALEX_mcuenta_corriente_sum_abs := mcuenta_corriente_abs + mcuenta_corriente_adicional]
+  dataset[ , ALEX_mcuenta_corriente_sum_abs_prom := (mcuenta_corriente_abs + mcuenta_corriente_abs)/2] 
   
   # VARIABLES GUSTAVO
   
@@ -723,12 +725,9 @@ correr_todo  <- function( palancas )
   if(palancas$ratiomax3)  RatioMax(  dataset, cols_analiticas, 3) #La idea de Daiana Sparta
   if(palancas$ratiomean6) RatioMean( dataset, cols_analiticas, 6) #Derivado de la idea de Daiana Sparta
 
-
   if( palancas$tendencia6 )  Tendencia( dataset, cols_analiticas)
 
-
   if( palancas$canaritosimportancia )  CanaritosImportancia( dataset )
-
 
 
   #dejo la clase como ultimo campo
@@ -742,7 +741,7 @@ correr_todo  <- function( palancas )
           sep= "," )
   
   #Grabo un dataset para chequear las variables
-  ds_view <- dataset[1:100, ]
+  ds_view <- dataset[1:50, ]
   fwrite( ds_view,
         paste0( "./datasets/dataset_epic_view_", palancas$version, ".csv.gz" ),
         logical01 = TRUE,

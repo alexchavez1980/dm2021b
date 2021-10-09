@@ -49,7 +49,7 @@ kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es pa
 
 kscript         <- "822_epic"
 
-karch_dataset    <- "./datasets/dataset_epic_v010.csv.gz"
+karch_dataset    <- "./datasets/dataset_epic_v011.csv.gz"
 
 kapply_mes       <- c(202101)  #El mes donde debo aplicar el modelo
 
@@ -78,7 +78,7 @@ hs <- makeParamSet(
 
 campos_malos  <- c()   #aqui se deben cargar todos los campos culpables del Data Drifting
 
-ksemilla_azar  <- 102241  #Aqui poner la propia semilla
+ksemilla_azar  <- 102241  #102229 Semilla 2 #Aqui poner la propia semilla
 #------------------------------------------------------------------------------
 #Funcion que lleva el registro de los experimentos
 
