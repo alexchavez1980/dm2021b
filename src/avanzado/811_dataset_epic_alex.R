@@ -269,7 +269,7 @@ AgregarVariables  <- function( dataset )
   
   #Promedio de donde se mueve el dinero DEL VOLÚMEN
   #OJO: Acá hay una buena.
-  dataset[ , ALEX_prom_5_var_vol := (mcuentas_saldo_vol + mpayroll_vol + mcuenta_debitos_automaticos_vol + mtransferencias_recibidas_vol + mextraccion_autoservicio_vol)/5]
+  dataset[ , ALEX_prom_5_var_vol := (ALEX_mcuentas_saldo_vol + ALEX_mpayroll_vol + ALEX_mcuenta_debitos_automaticos_vol + ALEX_mtransferencias_recibidas_vol + ALEX_mextraccion_autoservicio_vol)/5]
 # dataset[ , prom_5_var_vol_mult := prom_5_var_vol*100]    
   
   # Master_status y Visa_status  
