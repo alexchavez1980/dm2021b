@@ -295,7 +295,7 @@ AgregarVariables  <- function( dataset )
   # Valores absolutos para testear volúmen
   dataset[ , ALEX_mtarjeta_visa_consumo_vol := ifelse(mtarjeta_visa_consumo < 0,mtarjeta_visa_consumo*(-1),mtarjeta_visa_consumo)]
   dataset[ , ALEX_mtarjeta_master_consumo_vol := ifelse(mtarjeta_master_consumo < 0,mtarjeta_master_consumo*(-1),mtarjeta_master_consumo)]
-  dataset[ , ALEX_mtarjeta_VyM_consumo_prom := (mtarjeta_visa_consumo_vol + mtarjeta_master_consumo_vol)/2] 
+  dataset[ , ALEX_mtarjeta_VyM_consumo_prom := (ALEX_mtarjeta_visa_consumo_vol + ALEX_mtarjeta_master_consumo_vol)/2] 
   
   # Monto del pago minimo necesario para no ser moroso de la tarjeta de crédito
   # Master_mpagominimo Visa_mpagominimo
