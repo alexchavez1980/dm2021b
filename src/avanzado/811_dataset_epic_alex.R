@@ -309,7 +309,7 @@ AgregarVariables  <- function( dataset )
   #mcaja_ahorro_dolares	pesos	Monto total de las cajas de ahorro en dólares.  
   #El valor esta expresado en pesos, y se considera el valor del dolar de cierre del último dia hábil del mes.
   
-  ALEX_mcaja_ahorro_sum
+  
   dataset[ , ALEX_mcaja_ahorro_sum := mcaja_ahorro + mcaja_ahorro_adicional + mcaja_ahorro_dolares]
   dataset[ , ALEX_mcaja_ahorro_abs := ifelse(ALEX_mcaja_ahorro_sum < 0,ALEX_mcaja_ahorro_sum*(-1),ALEX_mcaja_ahorro_sum)]
   
@@ -319,8 +319,8 @@ AgregarVariables  <- function( dataset )
   # Valores absolutos para testear volúmen
   dataset[ , ALEX_mcuenta_corriente_abs := ifelse(mcuenta_corriente < 0,mcuenta_corriente*(-1),mcuenta_corriente)]
   dataset[ , ALEX_mcuenta_corriente_adicional_abs := ifelse(mcuenta_corriente_adicional < 0,mcuenta_corriente_adicional*(-1),mcuenta_corriente_adicional)]
-  dataset[ , ALEX_mcuenta_corriente_sum_abs := mcuenta_corriente_abs + mcuenta_corriente_adicional]
-  dataset[ , ALEX_mcuenta_corriente_sum_abs_prom := (mcuenta_corriente_abs + mcuenta_corriente_abs)/2] 
+  dataset[ , ALEX_mcuenta_corriente_sum_abs := ALEX_mcuenta_corriente_abs + ALEX_mcuenta_corriente_adicional_abs]
+  dataset[ , ALEX_mcuenta_corriente_sum_abs_prom := (ALEX_mcuenta_corriente_abs + ALEX_mcuenta_corriente_adicional_abs)/2] 
   
   # VARIABLES GUSTAVO
   
